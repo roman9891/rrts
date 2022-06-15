@@ -1,32 +1,26 @@
 import React from "react";
 import ReactDOM from 'react-dom/client'
+import { configureStore } from "@reduxjs/toolkit";
+import { applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import { App } from "./components/App";
+import { reducer } from "./reducers/reducer";
+import { fetchTodos } from "./actions/action";
 
-class App extends React.Component {
-    state = {
-        counter: 0
-    }
+const store = configureStore(reducer, fetchTodos, applyMiddleware(thunk))
 
-    onPlus = (): void => {
-        this.setState({ counter: this.state.counter + 1})
-    }
-    onMinus = (): void => {
-        this.setState({ counter: this.state.counter - 1})
-    }
+const root = document.getElementById('root')
+let DOM
 
-    render() {
-        return (
-            <div>
-                Hi
-                <button onClick={this.onPlus}>plus</button>
-                <button onClick={this.onMinus}>minus</button>
-                {this.state.counter}
-            </div>
-        )
-    }
+if (root) {
+    DOM = ReactDOM.createRoot(root)
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
-
-root.render(
-    <App></App>
-)
+if (DOM) {
+    DOM.render(
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    )
+}
