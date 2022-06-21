@@ -5,7 +5,7 @@ import { applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { App } from "./components/App";
-import { reducer } from "./reducers/reducer";
+import { reducer } from "./reducers";
 import { fetchTodos } from "./actions/action";
 
 const store = configureStore(reducer, fetchTodos, applyMiddleware(thunk))
